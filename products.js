@@ -3,57 +3,57 @@ const products = [
     title: "Uva Crimson",
     price: 8.99,
     category: "Frutas",
-    image: undefined,
-    imageDescription: "",
+    image: "./img/products/no-img.svg",
+    imageDescription: "Imagem contendo a mensagem produto sem imagem",
   },
   {
     title: "Banana",
     price: 5.69,
     category: "Frutas",
     image: "./img/products/product_2.svg",
-    imageDescription: "",
+    imageDescription: "imagem com varios tipos cachos de banana",
   },
   {
     title: "Mamão",
     price: 4.99,
     category: "Frutas",
     image: "./img/products/product_3.svg",
-    imageDescription: "",
+    imageDescription: "Imagem contendo vários mamões",
   },
   {
     title: "Maçã",
     price: 9.2,
     category: "Frutas",
     image: "./img/products/product_4.svg",
-    imageDescription: "",
+    imageDescription: "Imagem contendo a maçã verde",
   },
   {
     title: "Refrigerante",
     price: 8.99,
     category: "Bebidas",
-    image: undefined,
-    imageDescription: "",
+    image: "./img/products/no-img.svg",
+    imageDescription: "Imagem contendo a mensagem produto sem imagem",
   },
   {
     title: "Vinho",
     price: 8.99,
     category: "Bebidas",
     image: "./img/products/product_6.svg",
-    imageDescription: "",
+    imageDescription: "Imagem contendo foto do vinho ",
   },
   {
     title: "Água Tônica",
     price: 8.99,
     category: "Bebidas",
-    image: undefined,
-    imageDescription: "",
+    image: "./img/products/no-img.svg",
+    imageDescription: "Imagem contendo a mensagem produto sem imagem",
   },
   {
     title: "Água de coco",
     price: 8.99,
     category: "Bebidas",
     image: "./img/products/product_8.svg",
-    imageDescription: "",
+    imageDescription: "imagem com varios cocos",
   },
 
   {
@@ -61,7 +61,7 @@ const products = [
     price: 8.99,
     category: "Higiene",
     image: "./img/products/product_9.svg",
-    imageDescription: "",
+    imageDescription: "Imagem contendo sabonete",
   },
 
   {
@@ -69,7 +69,7 @@ const products = [
     price: 8.99,
     category: "Higiene",
     image: "./img/products/product_10.svg",
-    imageDescription: "",
+    imageDescription: "Imagem do detergente",
   },
 
   {
@@ -77,14 +77,75 @@ const products = [
     price: 8.99,
     category: "Higiene",
     image: "./img/products/product_11.svg",
-    imageDescription: "",
+    imageDescription: "Imagem contendo o produto Limpa superficies sendo utilizado por uma mão com luva",
   },
 
   {
     title: "Lustra Móveis",
     price: 8.99,
     category: "Higiene",
-    image: undefined,
-    imageDescription: "",
+    image: "./img/products/no-img.svg",
+    imageDescription: "Imagem contendo a mensagem produto sem imagem",
   },
 ];
+navMaker()
+function navMaker (){
+  let nav = document.createElement('nav')
+  let body = document.querySelector("body")
+  let main = document.querySelector(".container")
+  body.insertBefore(nav,main)
+  let img = document.createElement('img')
+  img.src = "./img/brand/logo.svg"
+  img.setAttribute("alt","Imagem da logotipo do Virtual Market de cor preta")
+  img.setAttribute("title","Imagem da logotipo do Virtual Market de cor preta")
+  document.querySelector("nav").appendChild(img)
+
+}
+marketInit()
+function marketInit(){
+  // ----- Para Selecionar as categorias ---------------
+   let inicioLoja = document.querySelector(".container")
+   let categoryRepeat = []
+   let classId = ['fruits','drinks','hygiene']
+   let searchID = ['.fruits','.drinks','.hygiene']
+  
+   for(let i = 0 ; i < products.length;  i++ ){
+     categoryRepeat.push(products[i].category)
+   }
+   let categoria = Array.from(new Set(categoryRepeat))
+   // ---- Para fazer o loop que coloca as tags no HTML -------------
+  // Começando pelos elementos "pai" que estão dentro da section main
+   for(let i = 0 ; i < categoria.length ; i++){
+      inicioLoja.innerHTML += `
+        <section class="products-section"> 
+          <h1>`+categoria[i]+`</h1>
+          <main class="products-content `+classId[i]+`" >
+          </main>
+        </section>
+        `
+        let productPlace = document.createElement('ul')
+        productPlace.setAttribute("id",categoria[i])
+        document.querySelector(searchID[i]).appendChild(productPlace)
+  // --- Criando elementos "filho" dos elementos criados anteriormente ---
+      let productCategory = document.getElementById(categoria[i])
+      let algumaCoisa = products.filter((item)=>item.category === categoria[i])
+      for (let x = 0 ; x < algumaCoisa.length ; x++){
+        productCategory.innerHTML += `
+        <li class="product">
+        <img
+          src="`+algumaCoisa[x].image+`"
+          alt="`+algumaCoisa[x].imageDescription+`"
+          title="`+algumaCoisa[x]+`"
+          class="product-img"
+        />
+        <main class="product-main">
+          <h1 class="product-title">`+algumaCoisa[x].title+`</h1>
+          <h5 class="product-category">`+algumaCoisa[x].category+`</h5>
+          <strong class="product-price">R$ `+algumaCoisa[x].price.toFixed(2)+`</strong>
+        </main>
+      </li>
+        `
+      }
+    }
+}
+
