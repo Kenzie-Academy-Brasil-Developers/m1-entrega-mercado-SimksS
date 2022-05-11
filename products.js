@@ -99,9 +99,9 @@ function navMaker (){
   img.setAttribute("alt","Imagem da logotipo do Virtual Market de cor preta")
   img.setAttribute("title","Imagem da logotipo do Virtual Market de cor preta")
   document.querySelector("nav").appendChild(img)
-
+  marketInit()
 }
-marketInit()
+
 function marketInit(){
   // ----- Para Selecionar as categorias ---------------
    let inicioLoja = document.querySelector(".container")
@@ -112,36 +112,36 @@ function marketInit(){
    for(let i = 0 ; i < products.length;  i++ ){
      categoryRepeat.push(products[i].category)
    }
-   let categoria = Array.from(new Set(categoryRepeat))
+   let categoriaProdutos = Array.from(new Set(categoryRepeat))
    // ---- Para fazer o loop que coloca as tags no HTML -------------
   // Começando pelos elementos "pai" que estão dentro da section main
-   for(let i = 0 ; i < categoria.length ; i++){
+   for(let i = 0 ; i < categoriaProdutos.length ; i++){
       inicioLoja.innerHTML += `
         <section class="products-section"> 
-          <h1>`+categoria[i]+`</h1>
+          <h1>`+categoriaProdutos[i]+`</h1>
           <main class="products-content `+classId[i]+`" >
           </main>
         </section>
         `
         let productPlace = document.createElement('ul')
-        productPlace.setAttribute("id",categoria[i])
+        productPlace.setAttribute("id",categoriaProdutos[i])
         document.querySelector(searchID[i]).appendChild(productPlace)
   // --- Criando elementos "filho" dos elementos criados anteriormente ---
-      let productCategory = document.getElementById(categoria[i])
-      let algumaCoisa = products.filter((item)=>item.category === categoria[i])
-      for (let x = 0 ; x < algumaCoisa.length ; x++){
+      let productCategory = document.getElementById(categoriaProdutos[i])
+      let produtosFiltrados = products.filter((item)=>item.category === categoriaProdutos[i])
+      for (let x = 0 ; x < produtosFiltrados.length ; x++){
         productCategory.innerHTML += `
         <li class="product">
         <img
-          src="`+algumaCoisa[x].image+`"
-          alt="`+algumaCoisa[x].imageDescription+`"
-          title="`+algumaCoisa[x]+`"
+          src="`+produtosFiltrados[x].image+`"
+          alt="`+produtosFiltrados[x].imageDescription+`"
+          title="`+produtosFiltrados[x].title+`"
           class="product-img"
         />
         <main class="product-main">
-          <h1 class="product-title">`+algumaCoisa[x].title+`</h1>
-          <h5 class="product-category">`+algumaCoisa[x].category+`</h5>
-          <strong class="product-price">R$ `+algumaCoisa[x].price.toFixed(2)+`</strong>
+          <h1 class="product-title">`+produtosFiltrados[x].title+`</h1>
+          <h5 class="product-category">`+produtosFiltrados[x].category+`</h5>
+          <strong class="product-price">R$ `+produtosFiltrados[x].price.toFixed(2)+`</strong>
         </main>
       </li>
         `
